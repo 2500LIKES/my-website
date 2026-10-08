@@ -3,7 +3,8 @@ const SUPABASE_ANON_KEY = 'sb_publishable_LC69PMvBvzkF6n6sMRFzEg_TIjTtkUZ';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-const tableNames=['links','events','codes'];
+const tableNames=['links','activities','free_codes'];
+const adminBox={links:'linksAdmin',activities:'eventsAdmin',free_codes:'codesAdmin'};
 async function ensureAdmin(){
  const {data:{user}}=await sb.auth.getUser();
  if(!user){location.href='index.html';return null}
@@ -26,14 +27,14 @@ async function loadAdminTables(){
  }
 }
 function renderAdmin(t,rows){
- const el=$(t+'Admin');
- el.innerHTML=rows.length?rows.map(r=>`<div class="row"><div class="row-title"><b>${esc(r.title)}</b><small>${esc(r.url||'')} · <span class="status">${r.enabled?'เปิด':'ปิด'}</span></small></div><button class="open-btn" onclick='editRow(${JSON.stringify(r)}, "${t}")'>แก้ไข</button><button class="open-btn danger" onclick='deleteRow("${r.id}","${t}")'>ลบ</button></div>`).join(''):'<div class="empty">ยังไม่มีรายการ</div>';
+ const el=$(adminBox[t]);
+ el.innerHTML=rows.length?rows.map(r=>`<div class="row"><div class="row-title"><b>${esc(r.name)}</b><small>${esc(r.url||'')} · <span class="status">${r.enabled?'เปิด':'ปิด'}</span></small></div><button class="open-btn" onclick='editRow(${JSON.stringify(r)}, "${t}")'>แก้ไข</button><button class="open-btn danger" onclick='deleteRow("${r.id}","${t}")'>ลบ</button></div>`).join(''):'<div class="empty">ยังไม่มีรายการ</div>';
 }
 function openEditor(t,row=null){
  $('editor').classList.add('show');$('editTable').value=t;$('editId').value=row?.id||'';
  $('editorTitle').textContent=row?'แก้ไขรายการ':'เพิ่มรายการ';
- $('fTitle').value=row?.title||'';$('fUrl').value=row?.url||'';$('fImage').value=row?.image_url||'';$('fButton').value=row?.button_text||'เปิดเว็บไซต์';$('fDesc').value=row?.description||'';$('fCode').value=row?.code||'';$('fEnabled').value=String(row?.enabled ?? true);
- $('codeLabel').style.display=t==='codes'?'block':'none';
+ $('fTitle').value=row?.name||'';$('fUrl').value=row?.url||'';$('fImage').value=row?.image_url||'';$('fButton').value=row?.button_text||'เปิดเว็บไซต์';$('fDesc').value=row?.description||'';$('fCode').value=row?.code||'';$('fEnabled').value=String(row?.enabled ?? true);
+ $('codeLabel').style.display=t==='free_codes'?'block':'none';
 }
 function closeEditor(){$('editor').classList.remove('show')}
 window.openEditor=openEditor;window.closeEditor=closeEditor;
@@ -44,8 +45,8 @@ window.deleteRow=async(id,t)=>{
 };
 $('saveItem').onclick=async()=>{
  const t=$('editTable').value,id=$('editId').value;
- const payload={title:$('fTitle').value.trim(),url:$('fUrl').value.trim(),image_url:$('fImage').value.trim()||null,button_text:$('fButton').value.trim()||'เปิดเว็บไซต์',description:$('fDesc').value.trim()||null,enabled:$('fEnabled').value==='true'};
- if(t==='codes')payload.code=$('fCode').value.trim();
+ const payload={name:$('fTitle').value.trim(),url:$('fUrl').value.trim(),image_url:$('fImage').value.trim()||null,button_text:$('fButton').value.trim()||'เปิดเว็บไซต์',description:$('fDesc').value.trim()||null,enabled:$('fEnabled').value==='true'};
+ if(t==='free_codes')payload.code=$('fCode').value.trim();
  let q=id?sb.from(t).update(payload).eq('id',id):sb.from(t).insert(payload);
  const {error}=await q;
  $('itemMsg').textContent=error?'บันทึกไม่สำเร็จ: '+error.message:'บันทึกแล้ว';

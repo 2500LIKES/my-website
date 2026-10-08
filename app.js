@@ -12,8 +12,8 @@ async function loadSite(){
   const [{data:settings},{data:links},{data:events},{data:codes}] = await Promise.all([
     sb.from('site_settings').select('*').eq('id',1).maybeSingle(),
     sb.from('links').select('*').eq('enabled',true).order('sort_order').order('created_at'),
-    sb.from('events').select('*').eq('enabled',true).order('sort_order').order('created_at'),
-    sb.from('codes').select('*').eq('enabled',true).order('sort_order').order('created_at')
+    sb.from('activities').select('*').eq('enabled',true).order('sort_order').order('created_at'),
+    sb.from('free_codes').select('*').eq('enabled',true).order('sort_order').order('created_at')
   ]);
   if(settings){
     const name=settings.site_name || 'MEKDIWA';
@@ -31,7 +31,7 @@ function renderCards(id,rows,button){
   if(!rows?.length){el.innerHTML='<div class="empty">ยังไม่มีรายการ</div>';return}
   el.innerHTML=rows.map(x=>`<article class="link-card">
     ${x.image_url?`<div class="thumb"><img src="${esc(x.image_url)}" alt=""></div>`:''}
-    <div class="card-body"><h3>${esc(x.title)}</h3><p>${esc(x.description||'')}</p>
+    <div class="card-body"><h3>${esc(x.name)}</h3><p>${esc(x.description||'')}</p>
     <a class="open-btn" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.button_text||button)}</a></div>
   </article>`).join('');
 }
@@ -40,7 +40,7 @@ function renderCodes(rows){
   if(!rows?.length){el.innerHTML='<div class="empty">ยังไม่มีโค้ด</div>';return}
   el.innerHTML=rows.map(x=>`<article class="link-card">
     ${x.image_url?`<div class="thumb"><img src="${esc(x.image_url)}" alt=""></div>`:''}
-    <div class="card-body"><h3>${esc(x.title)}</h3><p>โค้ด: <b>${esc(x.code)}</b></p>
+    <div class="card-body"><h3>${esc(x.name)}</h3><p>โค้ด: <b>${esc(x.code)}</b></p>
     <a class="open-btn" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">เปิดลิงก์</a></div>
   </article>`).join('');
 }
@@ -63,8 +63,8 @@ $('loginBtn').onclick=async()=>{
 sb.channel('public-site-realtime')
  .on('postgres_changes',{event:'*',schema:'public',table:'site_settings'},loadSite)
  .on('postgres_changes',{event:'*',schema:'public',table:'links'},loadSite)
- .on('postgres_changes',{event:'*',schema:'public',table:'events'},loadSite)
- .on('postgres_changes',{event:'*',schema:'public',table:'codes'},loadSite)
+ .on('postgres_changes',{event:'*',schema:'public',table:'activities'},loadSite)
+ .on('postgres_changes',{event:'*',schema:'public',table:'free_codes'},loadSite)
  .subscribe();
 
 loadSite();

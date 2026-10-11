@@ -2,96 +2,94 @@
 <html lang="th">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>MEKDIWA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b16">
+  <title>SZ — ระบบเงินทดลอง</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <div class="ambient"></div>
+  <div class="bg-glow"></div>
   <header class="topbar">
-    <a class="brand" href="#">
-      <img id="brandLogo" src="" alt="logo">
-      <span id="brandName">MEKDIWA</span>
-    </a>
-    <button id="menuBtn" class="menu-btn" aria-label="เปิดเมนู"><span></span><span></span><span></span></button>
+    <a class="brand" href="#"><span class="brand-mark">SZ</span><span><b>SZ</b><small>ระบบเงินทดลอง</small></span></a>
+    <div class="top-right"><span id="connection" class="status-pill">● ยังไม่เชื่อมต่อ</span><button id="logoutBtn" class="btn btn-ghost hidden">ออกจากระบบ</button></div>
   </header>
 
-  <aside id="drawer" class="drawer">
-    <div class="drawer-head">
-      <img id="drawerLogo" src="" alt="logo">
-      <div>
-        <b id="drawerName">MEKDIWA</b>
-        <small>OFFICIAL LINK COLLECTION</small>
+  <main class="container">
+    <section id="authView" class="auth-layout">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> DEMO WALLET EXPERIENCE</div>
+        <h1>ทดลองใช้งาน<br><span>โลกของ SZ</span></h1>
+        <p>บัญชีเดียว ข้อมูลกลางเดียว ซิงก์ข้อมูลข้ามอุปกรณ์ด้วย Supabase</p>
+        <div class="hero-points"><span>✓ ยอดทดลองบันทึกออนไลน์</span><span>✓ ประวัติรายการ</span><span>✓ ระบบสิทธิ์สมาชิก</span></div>
       </div>
-    </div>
-    <nav>
-      <button data-scroll="home" class="nav-item active">⌂ <span>หน้าแรก</span></button>
-      <button data-scroll="links" class="nav-item">☆ <span>เว็บไซต์แนะนำ</span></button>
-      <button data-scroll="events" class="nav-item">♢ <span>กิจกรรม</span></button>
-      <button data-scroll="codes" class="nav-item">▣ <span>แจกโค้ด</span></button>
-      <button data-scroll="about" class="nav-item">◇ <span>ทำไมถึงเลือกเรา</span></button>
-      <button data-scroll="reviews" class="nav-item">◌ <span>รีวิว</span></button>
-      <button id="settingsBtn" class="nav-item settings">⚙ <span>ตั้งค่า</span></button>
-    </nav>
-  </aside>
-  <div id="drawerBackdrop" class="backdrop"></div>
-
-  <main>
-    <section id="home" class="hero section">
-      <div class="hero-logo-wrap"><img id="heroLogo" src="" alt="logo"></div>
-      <div class="eyebrow"><i></i> OFFICIAL LINK COLLECTION <i></i></div>
-      <h1 id="heroName">MEKDIWA</h1>
-      <p id="announcement" class="announcement">ยินดีต้อนรับเข้าสู่เว็บไซต์</p>
-      <div class="gold-line"></div>
-    </section>
-
-    <section id="links" class="section">
-      <div class="section-title"><span>☆</span><h2>เว็บไซต์แนะนำ</h2><i></i></div>
-      <div id="linksGrid" class="card-grid"></div>
-  </section>
-
-    <section id="events" class="section">
-      <div class="section-title"><span>♢</span><h2>กิจกรรม</h2><i></i></div>
-      <div id="eventsGrid" class="card-grid"></div>
-    </section>
-
-    <section id="codes" class="section">
-      <div class="section-title"><span>▣</span><h2>แจกโค้ด</h2><i></i></div>
-      <div id="codesGrid" class="card-grid"></div>
-    </section>
-
-    <section id="about" class="section about">
-      <div class="section-title"><span>◇</span><h2>ทำไมถึงเลือกเรา</h2><i></i></div>
-      <div class="about-grid">
-        <article><b>01</b><h3>รวมทุกลิงก์</h3><p>รวมช่องทางสำคัญไว้ในหน้าเดียว ค้นหาง่ายและใช้งานบนมือถือสะดวก</p></article>
-        <article><b>02</b><h3>อัปเดตจากหลังบ้าน</h3><p>ข้อมูลถูกเก็บบนฐานข้อมูลกลาง แก้ไขจากแอดมินแล้วหน้าเว็บรับข้อมูลใหม่ได้ทันที</p></article>
-        <article><b>03</b><h3>ดีไซน์ทันสมัย</h3><p>โทนดำ–ทองแบบพรีเมียม พร้อมภาพตัวอย่างและปุ่มลิงก์ที่ชัดเจน</p></article>
+      <div class="panel auth-panel">
+        <div class="tab-switch"><button class="tab active" data-tab="login">เข้าสู่ระบบ</button><button class="tab" data-tab="register">สมัครสมาชิก</button></div>
+        <div id="loginForm">
+          <h2>ยินดีต้อนรับกลับ</h2><p class="muted">เข้าสู่บัญชี SZ ของคุณ</p>
+          <label>ชื่อผู้ใช้<input id="loginUsername" autocomplete="username" placeholder="กรอกชื่อผู้ใช้"></label>
+          <label>รหัสผ่าน<input id="loginPassword" type="password" autocomplete="current-password" placeholder="กรอกรหัสผ่าน"></label>
+          <button id="loginBtn" class="btn btn-primary full">เข้าสู่ระบบ <span>→</span></button>
+        </div>
+        <div id="registerForm" class="hidden">
+          <h2>สร้างบัญชีใหม่</h2><p class="muted">สำหรับเดโมเท่านั้น ห้ามใช้รหัสผ่านที่ใช้กับบริการอื่น</p>
+          <label>ชื่อผู้ใช้<input id="regUsername" autocomplete="username" placeholder="อย่างน้อย 3 ตัวอักษร"></label>
+          <label>เบอร์โทรศัพท์<input id="regPhone" inputmode="tel" autocomplete="tel" placeholder="เบอร์โทรศัพท์"></label>
+          <label>รหัสผ่าน<input id="regPassword" type="password" autocomplete="new-password" placeholder="อย่างน้อย 8 ตัวอักษร"></label>
+          <button id="registerBtn" class="btn btn-primary full">สมัครสมาชิก <span>→</span></button>
+        </div>
+        <div id="authMessage" class="message" role="status"></div>
+        <div class="notice">เดโมนี้ใช้ยอดและคะแนนจำลองเท่านั้น ไม่มีเงินจริง ไม่มีการโอนเงินจริง</div>
       </div>
     </section>
 
-    <section id="reviews" class="section">
-      <div class="section-title"><span>◌</span><h2>รีวิว</h2><i></i></div>
-      <div class="review-box">พื้นที่รีวิว สามารถเพิ่มระบบรีวิวจริงภายหลังได้</div>
+    <section id="appView" class="hidden">
+      <div class="welcome-row"><div><div class="eyebrow">MEMBER DASHBOARD</div><h1>สวัสดี, <span id="memberName">สมาชิก</span> 👋</h1><p class="muted">ข้อมูลทดลองของคุณจะอัปเดตจากฐานข้อมูลกลาง</p></div><div id="adminBadge" class="admin-badge hidden">ADMIN MODE</div></div>
+      <div class="stats-grid">
+        <article class="stat-card main-stat"><div class="stat-label">ยอดเงินทดลองคงเหลือ</div><div class="stat-value"><span id="balance">0.00</span><small>บาท</small></div><div class="stat-foot">ยอดจำลองในบัญชี SZ</div></article>
+        <article class="stat-card"><div class="stat-label">สิทธิ์หมุนคงเหลือ</div><div class="stat-value"><span id="spins">0</span><small>ครั้ง</small></div><div class="stat-foot">ใช้ร่วมกันทุกอุปกรณ์</div></article>
+        <article class="stat-card"><div class="stat-label">รางวัลสะสม</div><div class="stat-value"><span id="earned">0.00</span><small>บาท</small></div><div class="stat-foot">จากกิจกรรมทดลอง</div></article>
+        <article class="stat-card"><div class="stat-label">ยอดถอนทดลองสะสม</div><div class="stat-value"><span id="withdrawn">0.00</span><small>บาท</small></div><div class="stat-foot">ไม่มีการจ่ายเงินจริง</div></article>
+      </div>
+
+      <div class="main-grid">
+        <section class="panel wheel-panel">
+          <div class="section-heading"><div><div class="eyebrow">LUCKY WHEEL DEMO</div><h2>วงล้อคะแนนทดลอง</h2></div><span class="tag">ไม่มีเงินจริง</span></div>
+          <div class="wheel-wrap"><div class="wheel-pointer"></div><div id="wheel" class="wheel"><div class="wheel-center">SZ</div></div></div>
+          <p class="wheel-caption">รางวัลจำลอง: 5 • 10 • 15 • 20 บาททดลอง และช่องเกลือ 2 ช่อง</p>
+          <button id="spinBtn" class="btn btn-primary full">หมุนวงล้อ <span>↻</span></button>
+          <div id="spinMessage" class="message"></div>
+        </section>
+        <section class="panel withdraw-panel">
+          <div class="section-heading"><div><div class="eyebrow">DEMO REQUEST</div><h2>ถอนยอดทดลอง</h2></div><span class="tag">จำลอง</span></div>
+          <p class="muted small">ส่งคำขอจำลองเพื่อทดสอบประวัติและการอนุมัติเท่านั้น ไม่โอนเงินหรือเติมเข้าวอลเล็ตจริง</p>
+          <label>เบอร์โทรศัพท์สำหรับรายการ<input id="withdrawPhone" inputmode="tel" placeholder="กรอกเบอร์โทรศัพท์"></label>
+          <label>จำนวนเงินทดลอง (ขั้นต่ำ 3 บาท)<input id="withdrawAmount" type="number" min="3" step="1" placeholder="เช่น 3"></label>
+          <button id="withdrawBtn" class="btn btn-secondary full">ส่งคำขอถอนทดลอง</button>
+          <div id="withdrawMessage" class="message"></div>
+          <div class="mini-summary"><span>รายการรอตรวจสอบ</span><b id="pendingAmount">0.00 บาท</b></div>
+        </section>
+      </div>
+
+      <section class="panel history-panel">
+        <div class="section-heading"><div><div class="eyebrow">ACTIVITY LOG</div><h2>ประวัติรายการของฉัน</h2></div><button id="refreshBtn" class="btn btn-ghost">รีเฟรช ↻</button></div>
+        <div class="table-scroll"><table><thead><tr><th>วันที่</th><th>รายการ</th><th>จำนวน</th><th>สถานะ</th></tr></thead><tbody id="historyBody"><tr><td colspan="4" class="empty">ยังไม่มีรายการ</td></tr></tbody></table></div>
+      </section>
+
+      <section id="adminPanel" class="panel admin-panel hidden">
+        <div class="section-heading"><div><div class="eyebrow">ADMIN CONTROL</div><h2>จัดการระบบทดลอง</h2></div><span class="tag danger-tag">ผู้ดูแล</span></div>
+        <div class="admin-stats"><div><small>สมาชิกทั้งหมด</small><b id="totalMembers">0</b></div><div><small>ยอดทดลองรวม</small><b id="totalBalance">0.00 บาท</b></div><div><small>คำขอรอตรวจสอบ</small><b id="totalPending">0</b></div></div>
+        <h3>รายชื่อสมาชิก</h3>
+        <div class="table-scroll"><table><thead><tr><th>ชื่อผู้ใช้</th><th>เบอร์โทรศัพท์</th><th>ยอดทดลอง</th><th>สิทธิ์หมุน</th><th>สถานะ</th><th>การจัดการ</th></tr></thead><tbody id="membersBody"><tr><td colspan="6" class="empty">กำลังโหลด…</td></tr></tbody></table></div>
+        <h3>คำขอถอนทดลอง</h3>
+        <div class="table-scroll"><table><thead><tr><th>วันที่</th><th>สมาชิก</th><th>เบอร์รายการ</th><th>จำนวน</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody id="withdrawalsBody"><tr><td colspan="6" class="empty">กำลังโหลด…</td></tr></tbody></table></div>
+        <p class="muted tiny">การเพิ่มยอด/สิทธิ์และเปลี่ยนสถานะจะทำงานได้เมื่อสร้าง SQL และตั้งค่านโยบาย RLS ตามไฟล์ README ก่อน</p>
+      </section>
+      <footer>© SZ · ผู้สร้างโดย SZ <span>เวอร์ชันเงินทดลองเท่านั้น</span></footer>
     </section>
   </main>
-
-  <div id="loginModal" class="modal">
-    <div class="modal-card">
-      <button class="modal-close" data-close="loginModal">×</button>
-      <div class="modal-icon">⚙</div>
-      <h2>เข้าสู่หลังบ้าน</h2>
-      <p>ใช้บัญชีแอดมินของ Supabase</p>
-      <input id="adminEmail" type="email" placeholder="อีเมลแอดมิน">
-      <input id="adminPassword" type="password" placeholder="รหัสผ่าน">
-      <button id="loginBtn" class="primary-btn">เข้าสู่ระบบ</button>
-      <div id="loginMsg" class="form-msg"></div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="app.js"></script>
 </body>
 </html>
